@@ -35,6 +35,9 @@ class BaseCase(Case):
     def __str__(self) -> str:
         return self.name
 
+    def __repr__(self) -> str:
+        return f'BaseCase({self.name})'
+
     def __dict__(self) -> dict:
         return {strs.Ranks.Internal.NAME_KEY: self.name}
 
@@ -46,8 +49,11 @@ class BaseRank(Rank):
     def __str__(self) -> str:
         return self.name
 
+    def __repr__(self) -> str:
+        return f'BaseRank({self.name=}, {self.cases=})'
+
     def __dict__(self) -> dict:
         return {strs.Ranks.Internal.CASES_KEY : [str(case) for case in self.cases]}
 
-    def get_random_case(self) -> dict[str, Case]:
-        return {self.name: choice(self.cases)}
+    def get_random_case(self) -> Case:
+        return choice(self.cases)
