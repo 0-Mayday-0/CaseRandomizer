@@ -23,7 +23,7 @@ class DBHandler:
         return BaseRank(self.current_table.name, cases=[BaseCase(name=case) for case in self.current_table.all()[0][strs.Ranks.Internal.CASES_KEY]])
 
     def get_random_case(self) -> dict[str, str]:
-        return {self.current_table.name: self.get_random_rank().get_random_case().name}
+        return {self.current_table.name: str(self.get_random_rank().get_random_case())}
 
 
     def add_rank(self, rank: Rank) -> None:
