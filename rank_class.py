@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+from random import choice
+import strings as strs
 
 class Case(ABC):
     def __init__(self, name) -> None:
@@ -9,9 +11,9 @@ class Case(ABC):
         pass
 
 class Rank(ABC):
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str, cases: list[Case]) -> None:
         self.name: str = name
-        self.cases: list[Case]
+        self.cases: list[Case] = cases
 
     @abstractmethod
     def __str__(self) -> str:
@@ -24,3 +26,28 @@ class Rank(ABC):
     @abstractmethod
     def get_random_case(self) -> Case:
         pass
+
+
+class BaseCase(Case):
+    def __init__(self, name) -> None:
+        super().__init__(name)
+
+    def __str__(self) -> str:
+        return self.name
+
+    def __dict__(self) -> dict:
+        return {strs.Ranks.Internal.NAME_KEY: self.name}
+
+
+class BaseRank(Rank):
+    def __init__(self, name, cases) -> None:
+        super().__init__(name, cases)
+
+    def __str__(self) -> str:
+        return self.name
+
+    def __dict__(self) -> dict:
+        return {strs.Ranks.Internal.CASES_KEY : [str(case) for case in self.cases]}
+
+    def get_random_case(self) -> dict[str, Case]:
+        return {self.name: choice(self.cases)}
