@@ -9,8 +9,13 @@ class Case(ABC):
         pass
 
 class Rank(ABC):
-    def __init__(self) -> None:
+    def __init__(self, name: str) -> None:
+        self.name: str = name
         self.cases: list[Case]
+
+    @abstractmethod
+    def __str__(self) -> str:
+        pass
 
     @abstractmethod
     def __dict__(self) -> dict:
